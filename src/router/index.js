@@ -1,5 +1,4 @@
 let orderList = () => import('../views/orderList')
-let test = () => import('../views/test')
 let orderDetails = () => import('../views/orderDetails')
 
 const router = new VueRouter({

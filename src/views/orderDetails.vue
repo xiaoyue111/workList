@@ -1,11 +1,17 @@
 <template>
   <div class="order-details">
     <div class="order-details-wrap">
+      <!-- 右上角--消缺危险分级 -->
+      <img
+        class="defect-grade"
+        src="../assets/images/orderDetial/endanger2x.png"
+        alt=""
+      />
       <div class="order-infos">
         <!-- 第一行--工单编号 -->
         <div class="order-id">
           <span class="order-id-text">工单编号</span>
-          <span class="order-id-num">0000001</span>
+          <span class="order-id-num">{{ this.$route.params.orderId }}</span>
         </div>
         <!-- 第二行--停留时间 -->
         <div class="stay-time">停留 8h</div>
@@ -34,6 +40,23 @@
             <van-col class="infos-name">{{ item.defectName }}</van-col>
             <van-col class="infos-content">{{ item.defectContent }}</van-col>
           </van-row>
+          <div class="defect-content">
+            <div class="defect-title">缺陷内容：</div>
+            <p class="defect-text">
+              锅炉室的变压器下面的逆变器的灯红了，启动报错，有砰砰响声
+            </p>
+          </div>
+          <div class="defect-img defect-content">
+            <div class="defect-title">缺陷图片：</div>
+            <div class="defect-imges-wrap">
+              <div v-for="index in 6" :key="index" class="defect-imges">
+                <img
+                  src="../assets/images/orderDetial/defectImg2x.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <!-- 第六行--客户信息 -->
         <div class="client-information infos-background-style">
@@ -49,10 +72,8 @@
         </div>
         <!-- 第七行-- 接单--拒单-->
         <div class="receive-status">
-          <van-button round type="info" class="reject-status status-style"
-            >拒单</van-button
-          >
-          <van-button round type="info" class="recieve-status status-style"
+          <van-button round type="info" class="reject-status">拒单</van-button>
+          <van-button round type="info" class="recieve-status reject-status"
             >接收</van-button
           >
         </div>
@@ -161,8 +182,16 @@ export default {
     background: #ffffff;
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
+    margin-top: 34px;
+    // 右上角--消缺危险分级
+    .defect-grade {
+      width: 130px;
+      height: 122px;
+      position: absolute;
+      top: 34px;
+      right: 20px;
+    }
     .order-infos {
-      border: 1px solid red;
       min-height: 100vh;
       margin: 0 30px;
       // 第一行--工单编号
@@ -178,6 +207,7 @@ export default {
           color: #333333;
         }
       }
+
       // 第二行--停留时间
       .stay-time {
         font-size: 30px;
@@ -226,23 +256,68 @@ export default {
       // 第五行--消缺信息
       .defect-information {
         height: 1136px;
+        .defect-content {
+          width: 570px;
+          height: 204px;
+          background: #ffffff;
+          border-radius: 24px;
+          margin-left: 30px;
+          margin-top: 24px;
+          font-size: 28px;
+          .defect-title {
+            font-weight: 500;
+            color: #999999;
+            margin-left: 30px;
+            padding-top: 30px;
+          }
+          .defect-text {
+            margin: 24px 30px 30px 30px;
+          }
+        }
+        .defect-img {
+          height: 468px;
+          .defect-imges-wrap {
+            width: 540px;
+            height: 368px;
+            margin-left: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            .defect-imges {
+              width: 160px;
+              height: 160px;
+              margin-top: 24px;
+              margin-right: 15px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+        }
       }
       // 第六行--客户信息
       .client-information {
         height: 345px;
       }
-      //第七行-- 接单--拒单--公用样式
-      .status-style {
-        width: 270px;
-        height: 90px;
-        background: #ffffff;
-        box-shadow: 0px 24px 36px 0px rgba(7, 128, 237, 0.2);
-        border-radius: 48px;
-      }
       // 第七行-- 接单--拒单
       .receive-status {
-        border: 1px solid red;
         margin: 30px 0;
+        .reject-status {
+          width: 270px;
+          height: 90px;
+          background: #ffffff;
+          box-shadow: 0px 24px 36px 0px rgba(7, 128, 237, 0.2);
+          border-radius: 48px;
+          font-size: 36px;
+          margin-left: 30px;
+          color: #333;
+          border: 0;
+        }
+        .recieve-status {
+          background: #0780ed;
+          box-shadow: 0px 24px 36px 0px rgba(7, 128, 237, 0.3);
+          color: #ffffff;
+        }
       }
     }
   }

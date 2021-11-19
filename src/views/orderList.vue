@@ -340,13 +340,19 @@ export default {
       }, 30);
     },
     handleOrderDataListDetails() {
-      this.$router.push({ path: "/orderDetails" }).catch((err) => {
-        console.log(err);
-      });
+      this.$router
+        .push({
+          path: "/orderDetails",
+          params: { orderId: this.orderDataList },
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   created() {
-    console.log(this.$store);
+    // console.log(this.$store);
+    console.log(this.orderDataList);
   },
 };
 </script>
