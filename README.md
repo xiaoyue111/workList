@@ -1,19 +1,9 @@
 # worklist
 
-## Project setup
-```
-npm install
-```
+# 安装方式npm install
+## 启动方式npm run serve
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 相关逻辑文件
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## vue2+axios+Vuex+router+vantDesign
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
