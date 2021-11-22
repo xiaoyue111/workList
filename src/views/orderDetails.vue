@@ -49,7 +49,12 @@
           <div class="defect-img defect-content">
             <div class="defect-title">缺陷图片：</div>
             <div class="defect-imges-wrap">
-              <div v-for="index in 6" :key="index" class="defect-imges">
+              <div
+                v-for="index in 6"
+                :key="index"
+                class="defect-imges"
+                @click="handleImagePreview"
+              >
                 <img
                   src="../assets/images/orderDetial/defectImg2x.png"
                   alt=""
@@ -158,6 +163,14 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    handleImagePreview() {
+      vant.ImagePreview(["http://localhost:8081/img/defectImg2x.a5cd8036.png"]);
+    },
+  },
+  created() {
+    // console.log(this.$route.params);
   },
 };
 </script>

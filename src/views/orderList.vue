@@ -44,7 +44,10 @@
             class="order-content"
           >
             <van-swipe-cell>
-              <div class="order-item cf" @click="handleOrderDataListDetails">
+              <div
+                class="order-item cf"
+                @click="handleOrderDataListDetails(index)"
+              >
                 <!--工单具体内容-- 左侧 -->
                 <div class="order-item-left">
                   <div class="item-left-style item-left-name">
@@ -106,7 +109,7 @@
       />
     </van-button>
     <!-- 底部 -->
-    <van-divider class="order-end"> 没有更多啦1111 </van-divider>
+    <van-divider class="order-end"> 没有更多啦 </van-divider>
   </div>
 </template>
 
@@ -279,6 +282,7 @@ export default {
           orderStatus: 8,
         },
       ],
+      indexOrderId: 0,
     };
   },
   methods: {
@@ -339,11 +343,18 @@ export default {
         }
       }, 30);
     },
-    handleOrderDataListDetails() {
+    handleOrderDataListDetails(index) {
+      this.indexOrderId = index;
       this.$router
         .push({
-          path: "/orderDetails",
-          params: { orderId: this.orderDataList },
+          // path: "/orderDetails",
+          // query: {
+          //   orderId: this.orderDataList[this.indexOrderId].orderId,
+          // },
+          name: "orderDetails",
+          params: {
+            orderId: this.orderDataList[this.indexOrderId].orderId,
+          },
         })
         .catch((err) => {
           console.log(err);
@@ -352,7 +363,6 @@ export default {
   },
   created() {
     // console.log(this.$store);
-    console.log(this.orderDataList);
   },
 };
 </script>
