@@ -51,13 +51,13 @@
                 <!--工单具体内容-- 左侧 -->
                 <div class="order-item-left">
                   <div class="item-left-style item-left-name">
-                    {{ item.taskName }}
+                    {{ item.taskName | ellipsis }}
                   </div>
                   <div class="item-left-style">
                     派单时间 {{ item.createdTime }}
                   </div>
                   <div class="item-left-style">
-                    企业名称： {{ item.companyName }}
+                    企业名称： {{ item.companyName | ellipsis }}
                   </div>
                 </div>
                 <!--工单具体内容-- 右侧 -->
@@ -75,10 +75,10 @@
                     }}
                   </div>
                   <div class="type-text-delaytime">
-                    停留 {{ item.delayTime }}h
+                    停留 {{ delayTime(index) }}h
                   </div>
                   <div class="type-text-ordername">
-                    {{ item.orderType }}
+                    {{ orderTypeInfos()["case" + item.orderType].orderType }}
                   </div>
                 </div>
               </div>
@@ -211,78 +211,7 @@ export default {
       //     orderName: "消缺工单",
       //     orderStatus: 0,
       //   },
-      //   {
-      //     orderId: "0000002",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 1,
-      //   },
-      //   {
-      //     orderId: "0000003",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 2,
-      //   },
-      //   {
-      //     orderId: "0000004",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 3,
-      //   },
-      //   {
-      //     orderId: "0000005",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 4,
-      //   },
-      //   {
-      //     orderId: "0000006",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 5,
-      //   },
-      //   {
-      //     orderId: "0000007",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 6,
-      //   },
-      //   {
-      //     orderId: "0000008",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 7,
-      //   },
-      //   {
-      //     orderId: "0000009",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 8,
-      //   },
+
       // ],
       orderDataList: [],
       indexOrderId: 0,
@@ -333,6 +262,59 @@ export default {
       };
       return orderStatusList;
     },
+    delayTime(index) {
+      let dat = this.orderDataList[index].createdTime;
+      //  split("/")
+      let getYeardata = dat.split(" ")[0];
+      let getTimedata = dat.split(" ")[1];
+      //  年月日  时分秒
+      const beforeYear = getYeardata.split("-")[0];
+      const beforeMonth = getYeardata.split("-")[1];
+      const beforeDate = getYeardata.split("-")[2];
+      const beforeHours = getTimedata.split(":")[0];
+      const beforeMinutes = getTimedata.split(":")[1];
+      const beforeSeconds = getTimedata.split(":")[2];
+
+      const myDate = new Date();
+
+      myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+      myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+      myDate.getDate(); //获取当前日(1-31)
+
+      myDate.getHours(); //获取当前小时数(0-23)
+      myDate.getMinutes(); //获取当前分钟数(0-59)
+      myDate.getSeconds(); //获取当前秒数(0-59)
+
+      // 计算差值
+      const getDifference =
+        (myDate.getFullYear() - beforeYear) * 365 * 24 * 60 * 60 +
+        (myDate.getMonth() - beforeMonth + 1) * 30 * 24 * 60 * 60 +
+        (myDate.getDate() - beforeDate) * 24 * 60 * 60 +
+        (myDate.getHours() - beforeHours) * 60 * 60 +
+        (myDate.getMinutes() - beforeMinutes) * 60 +
+        (myDate.getSeconds() - beforeSeconds);
+      return getDifference;
+    },
+    orderTypeInfos() {
+      let orderTypeShift = {
+        case0: {
+          orderType: "消缺工单",
+        },
+        case1: {
+          orderType: "检修工单",
+        },
+        case2: {
+          orderType: "抢修工单",
+        },
+        case3: {
+          orderType: "巡检工单",
+        },
+        case4: {
+          orderType: "保养工单",
+        },
+      };
+      return orderTypeShift;
+    },
     backTop() {
       var timer = setInterval(function () {
         let osTop =
@@ -365,13 +347,24 @@ export default {
     },
     renderPageInitInfors() {
       let params = {};
-      let data = this.getOrderList(params).then((res) => {
-        console.log(res);
+      this.getOrderList(params).then((res) => {
+        this.orderDataList = res.data.data.data;
+        // console.log(this.orderDataList);
       });
     },
   },
   created() {
     this.renderPageInitInfors();
+  },
+  // 文字缩略
+  filters: {
+    ellipsis(value) {
+      if (!value) return "";
+      if (value.length > 9) {
+        return value.slice(0, 9) + "...";
+      }
+      return value;
+    },
   },
 };
 </script>
@@ -497,7 +490,7 @@ export default {
       height: 204px;
       float: left;
       .item-left-style {
-        width: 360px;
+        width: 380px;
         height: 30px;
         margin: 30px 0 0 30px;
         line-height: 30px;
@@ -525,7 +518,7 @@ export default {
         padding: 0 15px;
       }
       .type-text-delaytime {
-        width: 84px;
+        width: 160px;
         height: 30px;
         line-height: 30px;
         float: right;
