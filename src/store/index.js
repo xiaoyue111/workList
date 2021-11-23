@@ -1,9 +1,9 @@
-import orderListMutations from './mutations/orderList'
+import orderList from './modules/orderList'
 
 const store = new Vuex.Store({
   state: {},
-  mutations: {
-    orderList: orderListMutations
+  modules: {
+    orderList
   }
 })
 

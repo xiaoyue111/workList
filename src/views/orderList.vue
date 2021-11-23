@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "orderList",
@@ -286,7 +286,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["orderList"]),
+    ...mapActions(["getOrderList"]),
     handleOrderDataInfors() {},
     renderStyleByOrderTypeInfors() {
       //0-待接单 1-带签到 2-待审核 3-审核驳回 4-已拒绝 5-已终止 6-审核通过 7-已接单 8-作业中
@@ -360,10 +360,17 @@ export default {
           console.log(err);
         });
     },
+    renderPageInitInfors() {
+      let params = {}
+      let data = this.getOrderList(params)
+        .then((res) => {
+          console.log(res)
+        })
+    }
   },
   created() {
-    // console.log(this.$store);
-  },
+    this.renderPageInitInfors()
+  }
 };
 </script>
 
