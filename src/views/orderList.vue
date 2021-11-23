@@ -51,9 +51,11 @@
                 <!--工单具体内容-- 左侧 -->
                 <div class="order-item-left">
                   <div class="item-left-style item-left-name">
-                    {{ item.name }}
+                    {{ item.taskName }}
                   </div>
-                  <div class="item-left-style">派单时间 {{ item.time }}</div>
+                  <div class="item-left-style">
+                    派单时间 {{ item.createdTime }}
+                  </div>
                   <div class="item-left-style">
                     企业名称： {{ item.companyName }}
                   </div>
@@ -76,7 +78,7 @@
                     停留 {{ item.delayTime }}h
                   </div>
                   <div class="type-text-ordername">
-                    {{ item.orderName }}
+                    {{ item.orderType }}
                   </div>
                 </div>
               </div>
@@ -199,94 +201,96 @@ export default {
       orderDataLoad: false,
       orderDataFinished: true,
       // 0-待接单 1-待签到 2-待审核 3-审核驳回 4-已拒绝 5-已终止 6-审核通过 7-已接单 8-作业中
-      orderDataList: [
-        {
-          orderId: "0000001",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 0,
-        },
-        {
-          orderId: "0000002",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 1,
-        },
-        {
-          orderId: "0000003",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 2,
-        },
-        {
-          orderId: "0000004",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 3,
-        },
-        {
-          orderId: "0000005",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 4,
-        },
-        {
-          orderId: "0000006",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 5,
-        },
-        {
-          orderId: "0000007",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 6,
-        },
-        {
-          orderId: "0000008",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 7,
-        },
-        {
-          orderId: "0000009",
-          name: "缺陷名称名称名称名称名称",
-          time: "2021-11-15 16:15",
-          companyName: "名称名称名称名称",
-          delayTime: "8",
-          orderName: "消缺工单",
-          orderStatus: 8,
-        },
-      ],
+      // orderDataList: [
+      //   {
+      //     orderId: "0000001",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 0,
+      //   },
+      //   {
+      //     orderId: "0000002",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 1,
+      //   },
+      //   {
+      //     orderId: "0000003",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 2,
+      //   },
+      //   {
+      //     orderId: "0000004",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 3,
+      //   },
+      //   {
+      //     orderId: "0000005",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 4,
+      //   },
+      //   {
+      //     orderId: "0000006",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 5,
+      //   },
+      //   {
+      //     orderId: "0000007",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 6,
+      //   },
+      //   {
+      //     orderId: "0000008",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 7,
+      //   },
+      //   {
+      //     orderId: "0000009",
+      //     name: "缺陷名称名称名称名称名称",
+      //     time: "2021-11-15 16:15",
+      //     companyName: "名称名称名称名称",
+      //     delayTime: "8",
+      //     orderName: "消缺工单",
+      //     orderStatus: 8,
+      //   },
+      // ],
+      orderDataList: [],
       indexOrderId: 0,
     };
   },
   methods: {
-    ...mapMutations(["orderList"]),
+    // ...mapMutations(["orderList"]),
+
     handleOrderDataInfors() {},
     renderStyleByOrderTypeInfors() {
       //0-待接单 1-带签到 2-待审核 3-审核驳回 4-已拒绝 5-已终止 6-审核通过 7-已接单 8-作业中
@@ -353,16 +357,19 @@ export default {
           // },
           name: "orderDetails",
           params: {
-            orderId: this.orderDataList[this.indexOrderId].orderId,
+            orderId: this.orderDataList[this.indexOrderId].taskNo,
           },
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    ...mapMutations(["getOrderData"]),
   },
-  created() {
-    // console.log(this.$store);
+  mounted() {
+    this.getOrderData();
+
+    console.log(this.orderDataList);
   },
 };
 </script>
