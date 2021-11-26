@@ -51,13 +51,15 @@
                 <!--工单具体内容-- 左侧 -->
                 <div class="order-item-left">
                   <div class="item-left-style item-left-name">
-                    {{ item.taskName | ellipsis }}
+                    <!-- {{ item.taskName | ellipsis }} -->
+                    {{ item.taskName }}
                   </div>
                   <div class="item-left-style">
                     派单时间 {{ item.createdTime }}
                   </div>
                   <div class="item-left-style">
-                    企业名称： {{ item.companyName | ellipsis }}
+                    <!-- 企业名称： {{ item.companyName | ellipsis }} -->
+                    企业名称： {{ item.companyName }}
                   </div>
                 </div>
                 <!--工单具体内容-- 右侧 -->
@@ -337,7 +339,7 @@ export default {
     renderPageInitInfors() {
       let params = {};
       this.getOrderList(params).then((res) => {
-        if (res?.data?.data?.data || "default") {
+        if (res?.data?.data?.data) {
           this.orderDataList = res.data.data.data;
         }
       });
@@ -347,16 +349,23 @@ export default {
   created() {
     this.renderPageInitInfors();
   },
-  // 文字缩略
-  filters: {
-    ellipsis(value) {
-      if (!value) return "";
-      if (value.length > 9) {
-        return value.slice(0, 9) + "...";
-      }
-      return value;
-    },
+  // 判断是否为空
+  isNull(v) {
+    let n = [null, undefined, ""];
+    return n.indexOf(v) > -1 || (v.constructor === String && v.trim() === "")
+      ? true
+      : false;
   },
+  // 文字缩略
+  // filters: {
+  //   ellipsis(value) {
+  //     if (!value) return "";
+  //     if (value.length > 9) {
+  //       return value.slice(0, 9) + "...";
+  //     }
+  //     return value;
+  //   },
+  // },
 };
 </script>
 
@@ -486,6 +495,9 @@ export default {
         height: 30px;
         margin: 30px 0 0 30px;
         line-height: 30px;
+        overflow: hidden; //超出一行文字自动隐藏
+        text-overflow: ellipsis; //文字隐藏后添加省略号
+        white-space: nowrap; //强制不换行
       }
       .item-left-name {
         font-weight: bold;
