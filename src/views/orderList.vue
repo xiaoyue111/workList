@@ -201,24 +201,11 @@ export default {
       orderDataLoad: false,
       orderDataFinished: true,
       // 0-待接单 1-待签到 2-待审核 3-审核驳回 4-已拒绝 5-已终止 6-审核通过 7-已接单 8-作业中
-      // orderDataList: [
-      //   {
-      //     orderId: "0000001",
-      //     name: "缺陷名称名称名称名称名称",
-      //     time: "2021-11-15 16:15",
-      //     companyName: "名称名称名称名称",
-      //     delayTime: "8",
-      //     orderName: "消缺工单",
-      //     orderStatus: 0,
-      //   },
-
-      // ],
       orderDataList: [],
       indexOrderId: 0,
     };
   },
   methods: {
-    ...mapActions(["getOrderList"]),
     handleOrderDataInfors() {},
     renderStyleByOrderTypeInfors() {
       //0-待接单 1-带签到 2-待审核 3-审核驳回 4-已拒绝 5-已终止 6-审核通过 7-已接单 8-作业中
@@ -327,6 +314,7 @@ export default {
           clearInterval(timer);
         }
       }, 30);
+      // document.documentElement.scrollTop = 0;
     },
     handleOrderDataListDetails(index) {
       this.indexOrderId = index;
@@ -345,13 +333,16 @@ export default {
           console.log(err);
         });
     },
+
     renderPageInitInfors() {
       let params = {};
       this.getOrderList(params).then((res) => {
-        this.orderDataList = res.data.data.data;
-        // console.log(this.orderDataList);
+        if (res?.data?.data?.data || "default") {
+          this.orderDataList = res.data.data.data;
+        }
       });
     },
+    ...mapActions(["getOrderList"]),
   },
   created() {
     this.renderPageInitInfors();
@@ -370,12 +361,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../assets/css/base.less";
 .wrap {
   width: 750px;
   min-height: 100vh;
   background-image: url("../assets/images/background2x.png");
   background-repeat: no-repeat;
-  background-color: #0780ed;
+  background-color: @base-background-color;
   background-size: 100%;
   font-size: 24px;
   font-family: PingFangSC-Regular, PingFang SC;
@@ -399,7 +391,7 @@ export default {
     color: rgba(255, 255, 255, 0.6);
   }
   /deep/ .van-tab--active {
-    color: #fff;
+    color: @base-color;
     font-weight: bold;
   }
 
@@ -447,14 +439,14 @@ export default {
     display: flex;
     margin-top: 22px;
     .order-type-name {
-      width: 96px;
-      height: 40px;
-      color: #fff;
-      font-size: 24px;
-      line-height: 40px;
-      margin-left: 30px;
-      margin-right: 6px;
-      font-family: AlibabaPuHuiTiR;
+      // width: 96px;
+      // height: 40px;
+      // color: #fff;
+      // font-size: 24px;
+      // line-height: 40px;
+      // margin-left: 30px;
+      // margin-right: 6px;
+      // font-family: AlibabaPuHuiTiR;
     }
     /deep/ .van-dropdown-menu__bar {
       width: 130px;

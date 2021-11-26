@@ -169,9 +169,7 @@ export default {
       vant.ImagePreview(["http://localhost:8081/img/defectImg2x.a5cd8036.png"]);
     },
   },
-  created() {
-    // console.log(this.$route.params);
-  },
+  created() {},
 };
 </script>
 
