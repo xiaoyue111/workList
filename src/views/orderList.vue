@@ -77,7 +77,8 @@
                     }}
                   </div>
                   <div class="type-text-delaytime">
-                    停留 {{ delayTime(index) }}h
+                    <!-- 停留 {{ delayTime(index) }}h -->
+                    停留8小时
                   </div>
                   <div class="type-text-ordername">
                     {{ orderTypeInfos()["case" + item.orderType].orderType }}
@@ -522,7 +523,7 @@ export default {
         padding: 0 15px;
       }
       .type-text-delaytime {
-        width: 160px;
+        width: 120px;
         height: 30px;
         line-height: 30px;
         float: right;
